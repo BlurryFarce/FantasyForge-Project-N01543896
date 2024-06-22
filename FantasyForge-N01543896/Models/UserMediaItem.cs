@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Web;
+
+namespace FantasyForge_N01543896.Models {
+    public class UserMediaItem {
+        [Key]
+        public int UserMediaItemID { get; set; }
+
+        //Multiple users can have lists
+        [ForeignKey("User")]
+        public int UserID { get; set; }
+        public string UserName { get; set; }
+        public virtual User User { get; set; }
+
+        //Muliple media items can be present in a list
+        [ForeignKey("MediaItem")]
+        public int Title { get; set; }
+        public int MediaItemID { get; set; }
+        public virtual MediaItem MediaItem { get; set; }
+        
+
+        public int? Rating { get; set; } // Rating between 0 and 10
+        public string Review { get; set; }
+        public string Status { get; set; } // "Playing", "Completed", "Watching", "Dropped"
+
+        public ICollection<User> Users { get; set; }
+
+    }
+
+    public class UserMediaItemDto {
+        public int UserMediaItemID { get; set; }
+
+        //Multiple users can have lists
+        public int UserID { get; set; }
+
+        //Muliple media items can be present in a list
+        public int MediaItemID { get; set; }
+
+        public int? Rating { get; set; } // Rating between 0 and 10
+        public string Review { get; set; }
+        public string Status { get; set; } // "Playing", "Completed", "Watching", "Dropped"
+    }
+}
