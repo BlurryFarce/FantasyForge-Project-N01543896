@@ -48,13 +48,13 @@ namespace FantasyForge_N01543896.Controllers
         // GET: UserMediaItem/New
         public ActionResult New(int id)
         {
-            var UserMediaItem = new UserMediaItem
+            var userMediaItem = new UserMediaItem
             {
                 UserID = id
             };
 
             ViewBag.MediaItems = db.MediaItems.ToList();
-            return View(UserMediaItem);
+            return View(userMediaItem);
         }
 
         // POST: UserMediaItem/Create
@@ -77,7 +77,7 @@ namespace FantasyForge_N01543896.Controllers
             HttpResponseMessage response = client.PostAsync(url, content).Result;
             if (response.IsSuccessStatusCode)
             {
-                return RedirectToAction("List");
+                return RedirectToAction("Details", "User", new {id = UserMediaItem.UserID});
             }
             else
             {

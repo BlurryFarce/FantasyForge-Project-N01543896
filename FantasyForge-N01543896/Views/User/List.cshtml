@@ -7,7 +7,7 @@
 <h2>Users</h2>
 
 <p>
-    @Html.ActionLink("Add", "New")
+    <a class="btn btn-success" href="/User/new/">Add</a>
 </p>
 <table class="table">
     <tr>
@@ -21,7 +21,7 @@
     {
         <tr>
             <td>
-               <a href="/User/Details/@item.UserID">@item.UserName</a>
+               <a class="text-decoration-none fw-bold" href="/User/Details/@item.UserID">@item.UserName</a>
             </td>
             <td>
                 <a class="btn btn-primary" href="/User/Edit/@item.UserID">Edit</a>

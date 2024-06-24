@@ -6,7 +6,7 @@
 
 <h2>@Model.UserName's List</h2>
 
-<form action="/UserMediaItem/Edit/@Model.UserMediaItemID" method="post">
+<form action="/UserMediaItem/update/@Model.UserMediaItemID" method="post">
     <input type="hidden" name="UserMediaItemID" value="@Model.UserMediaItemID" />
     <input type="hidden" name="UserID" value="@Model.UserID" />
 
@@ -22,7 +22,13 @@
 
     <div class="form-group">
         <label for="Status">Status</label>
-        <input type="text" name="Status" class="form-control" value="@Model.Status" required />
+        <select name="Status" class="form-control" required>
+            <option value="Planning">Planning</option>
+            <option value="Completed">Completed</option>
+            <option value="Watching">Watching</option>
+            <option value="Dropped">Dropped</option>
+            <option value="Playing">Playing</option>
+        </select>
     </div>
 
     <div class="form-group">
@@ -36,5 +42,5 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Save</button>
-    <a href="/UserMediaItem/List" class="btn btn-default">Back to List</a>
+    <a href="/user/details/@Model.UserID" class="btn btn-default">Back to List</a>
 </form>

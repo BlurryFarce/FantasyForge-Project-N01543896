@@ -4,6 +4,17 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+html, body {
+    height: 100%
+}
+body{
+    display:flex;
+    flex-direction: column;
+}
+main{
+    flex-grow:1;
+}
+
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 

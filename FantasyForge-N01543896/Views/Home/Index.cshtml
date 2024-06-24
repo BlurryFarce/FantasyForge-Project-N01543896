@@ -3,31 +3,29 @@
 }
 
 <main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to FantasyForge!</h1>
+        <p class="lead">Your ultimate destination for managing your media collections. Whether you're a fan of movies, TV shows, or games, FantasyForge helps you keep track of your favorites, discover new ones, and share your thoughts with the community.</p>
+        <hr class="my-4">
+        <p>Explore a vast collection of media items, add them to your personal list, and review them to share your opinions with others. Join a growing community of media enthusiasts!</p>
+        <a class="btn btn-primary btn-lg" href="/MediaItem/List" role="button">Browse Media Items</a>
+    </div>
 
     <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+        <div class="col-md-4">
+            <h2>Discover</h2>
+            <p>Browse through a diverse library of media items. From the latest blockbusters to classic favorites, find something new to enjoy.</p>
+            <a class="btn btn-secondary" href="/MediaItem/List">Start Exploring »</a>
+        </div>
+        <div class="col-md-4">
+            <h2>Manage</h2>
+            <p>Create your personal list of media items. Track your progress, rate your favorites, and keep everything organized in one place.</p>
+            <a class="btn btn-secondary" href="/UserMediaItem/List">Manage Your List »</a>
+        </div>
+        <div class="col-md-4">
+            <h2>Share</h2>
+            <p>Share your reviews and ratings with the community. See what others are saying and join the conversation about your favorite media items.</p>
+            <a class="btn btn-secondary" href="/User/List">Join the Community »</a>
+        </div>
     </div>
 </main>

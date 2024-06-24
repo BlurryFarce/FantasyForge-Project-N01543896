@@ -12,30 +12,30 @@
         <input type="text" name="MediaItemID" value="@Model.MediaItemID" />
     </div>
     <div>
-        <label>Title:</label>
-        <input type="text" name="Title" value="@Model.Title" />
+        <label for="Title">Title:</label>
+        <input class="form-control" type="text" name="Title" value="@Model.Title" />
     </div>
     <div>
-        <label>Type:</label>
-        <input type="text" name="Type" value="@Model.Type" />
+        <label for="Type">Type:</label>
+        <input class="form-control" type="text" name="Type" value="@Model.Type" />
     </div>
     <div>
-        <label>Description:</label>
-        <textarea  name="Description" value="@Model.Description" rows="4" cols="40"> </textarea> 
+        <label for="Description">Description:</label>
+        <textarea class="form-control"  name="Description" value="@Model.Description" rows="4" cols="40"> </textarea> 
     </div>
     <div>
-        <label>Genre:</label>
-        <input type="text" name="Genre" value="@Model.Genre" />
+        <label for="Genre">Genre:</label>
+        <input class="form-control" type="text" name="Genre" value="@Model.Genre" />
     </div>
     <div style="display:none;">
         @* Pass through the Release Date *@
         <input type="datetime" name="ReleaseDate" value="@Model.ReleaseDate" />
     </div>
     <div>
-        <input type="submit" value="Update Media Item" />
+        <input class="btn btn-primary mt-3" type="submit" value="Update Media Item" />
     </div>
 </form>
 
 <div>
-    <a href="/MediaItem/List">Back to list</a>
+    <a class="btn btn-dark" href="/MediaItem/List">Back to list</a>
 </div>

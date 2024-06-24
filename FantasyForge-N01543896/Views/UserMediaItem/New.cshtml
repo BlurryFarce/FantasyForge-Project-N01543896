@@ -7,6 +7,7 @@
 <h2>Add Media to your List</h2>
 
 <form action="/UserMediaItem/Create" method="post">
+    @Html.AntiForgeryToken()
     <input type="hidden" name="UserID" value="@Model.UserID" />
 
     <div class="form-group">
@@ -18,7 +19,6 @@
             }
         </select>
     </div>
-
 
     <div class="form-group">
         <label for="Status">Status</label>
@@ -42,5 +42,5 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Add</button>
-    <a href="/user/details/@Model.User.UserID" class="btn btn-default">Back to List</a>
+    <a href="/User/Details/@Model.UserID" class="btn btn-default">Back to List</a>
 </form>
