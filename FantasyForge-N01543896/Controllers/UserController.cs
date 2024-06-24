@@ -40,7 +40,7 @@ namespace FantasyForge_N01543896.Controllers {
         public ActionResult Details(int id) {
             DetailsUser ViewModel = new DetailsUser();
 
-            //objective: communicate with our animal data api to retrieve one user
+            //objective: communicate with our user data api to retrieve one user
             //curl https://localhost:44318/api/userdata/finduser/{id}
 
             string url = "userdata/finduser/" + id;
@@ -138,7 +138,7 @@ namespace FantasyForge_N01543896.Controllers {
             {
                 //Updating the User Profile picture as a separate request
                 Debug.WriteLine("Calling Update Image method.");
-                //Send over image data for player
+                //Send over image data for user
                 url = "UserData/UploadUserPic/" + id;
                 Debug.WriteLine("Received Profile Picture "+UserPic.FileName);
 

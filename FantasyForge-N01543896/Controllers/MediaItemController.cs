@@ -67,6 +67,12 @@ namespace FantasyForge_N01543896.Controllers
             {
                 ViewModel.RelatedUsers = new List<UserDto>();
             }
+
+            url = "UserMediaItemData/FindUserMediaItemForMediaItem/" + id;
+            response = client.GetAsync(url).Result;
+
+            IEnumerable<UserMediaItemDto> RelatedUserLists = response.Content.ReadAsAsync<IEnumerable<UserMediaItemDto>>().Result;
+            ViewModel.RelatedUserLists = RelatedUserLists;
             return View(ViewModel);
         }
 

@@ -39,13 +39,16 @@
             Title
         </th>
         <th>
-          Status
+            Status
         </th>
         <th>
-           Rating
+            Rating
         </th>
         <th>
             Type
+        </th>
+        <th>
+            Review
         </th>
     </tr>
 
@@ -65,6 +68,9 @@
                 @item.Type
             </td>
             <td>
+                @item.Review
+            </td>
+            <td>
                 <a class="btn btn-primary" href="/usermediaitem/edit/@item.UserMediaItemID">Edit </a>
             </td>
             <td>
@@ -77,7 +83,6 @@
 
 <p>
     <a class="btn btn-primary" href="/UserMediaItem/New/@Model.SelectedUser.UserID">Add Media to the list</a>
-    <a class="btn btn-success" href="/User/Edit/@Model.SelectedUser.UserID">Edit</a>
-    <a class="btn btn-danger" href="/User/DeleteConfirm/@Model.SelectedUser.UserID">Delete</a>
-    <a class="btn btn-dark" href="/User/List">Back to List</a>
+    <a class="btn btn-success" href="/User/Edit/@Model.SelectedUser.UserID">Edit Profile</a>
+    <a class="btn btn-danger" href="/User/DeleteConfirm/@Model.SelectedUser.UserID">Delete Profile</a>
 </p>

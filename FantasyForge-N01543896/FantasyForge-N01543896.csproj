@@ -318,6 +318,7 @@
     <Content Include="Views\UserMediaItem\DeleteConfirm.cshtml" />
     <Content Include="Views\UserMediaItem\New.cshtml" />
     <Content Include="Views\UserMediaItem\Edit.cshtml" />
+    <Content Include="Views\UserMediaItem\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

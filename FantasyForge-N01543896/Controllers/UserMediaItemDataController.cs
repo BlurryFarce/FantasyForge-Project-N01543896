@@ -122,6 +122,45 @@ namespace FantasyForge_N01543896.Controllers
         }
 
         /// <summary>
+        /// Returns all UserMediaItems in the system associated with a particular user.
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all UserMediaItems in the database related to a particular user
+        /// </returns>
+        /// <param name="id">user Primary Key</param>
+        /// <example>
+        /// GET: api/UserMediaItemData/FindUserMediaItem/1
+        /// </example>
+        [HttpGet]
+        [ResponseType(typeof(UserMediaItem))]
+        public IHttpActionResult FindUserMediaItemForMediaItem(int id)
+        {
+
+            var userMediaItem = db.UserMediaItems
+                .Include(ui => ui.MediaItem)
+                .Include(ui => ui.User)
+                .Where(ui => ui.MediaItemID == id)
+                .Select(ui => new UserMediaItemDto
+                {
+                    UserMediaItemID = ui.UserMediaItemID,
+                    UserID = ui.UserID,
+                    MediaItemID = ui.MediaItemID,
+                    Rating = ui.Rating,
+                    Review = ui.Review,
+                    Status = ui.Status,
+                    UserName = ui.User.UserName
+                });
+            if (userMediaItem == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(userMediaItem);
+        }
+
+
+        /// <summary>
         /// Returns usermediaitem in the system.
         /// </summary>
         /// <returns>
@@ -233,7 +272,7 @@ namespace FantasyForge_N01543896.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            
             db.UserMediaItems.Add(UserMediaItem);
             db.SaveChanges();
 

@@ -112,7 +112,7 @@ namespace FantasyForge_N01543896.Controllers
             Debug.WriteLine(content);
             if (response.IsSuccessStatusCode)
             {
-                return RedirectToAction("List");
+                return RedirectToAction("Details", "User", new { id = UserMediaItem.UserID });
             }
             else
             {
@@ -158,7 +158,7 @@ namespace FantasyForge_N01543896.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                return RedirectToAction("List");
+                return RedirectToAction("list", "MediaItem");
             }
             else
             {

@@ -4,7 +4,7 @@
     ViewBag.Title = "Create Media Item";
 }
 
-<h2>Create Media Item</h2>
+<h2>Add Media</h2>
 
 <form action="/MediaItem/Create" method="POST">
     <div>
@@ -20,6 +20,8 @@
             <legend>Select Type</legend>
             <input type="radio" name=Type value="Game" id="GameRadio" /> <label for="GameRadio">Game</label>
             <input type="radio" name=Type value="Anime" id="AnimeRadio" /> <label for="AnimeRadio">Anime</label>
+            <input type="radio" name=Type value="Tv Show" id="ShowRadio" /> <label for="ShowRadio">Tv Show</label>
+            <input type="radio" name=Type value="Movie" id="MovieRadio" /> <label for="MovieRadio">Movie</label>
         </fieldset>
     </div>
     

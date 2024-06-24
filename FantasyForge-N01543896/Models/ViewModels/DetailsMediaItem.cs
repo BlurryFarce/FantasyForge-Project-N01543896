@@ -10,5 +10,7 @@ namespace FantasyForge_N01543896.Models.ViewModels {
 
         //all of the related users to that particular media item
         public IEnumerable<UserDto> RelatedUsers { get; set; }
+
+        public IEnumerable<UserMediaItemDto> RelatedUserLists { get; set; }
     }
 }
