@@ -8,7 +8,7 @@ namespace FantasyForge_N01543896.Models.ViewModels {
         
         public MediaItemDto SelectedMediaItem { get; set; }
 
-        //all of the related animals to that particular species
-        public IEnumerable<MediaItemDto> RelatedMediaItems { get; set; }
+        //all of the related users to that particular media item
+        public IEnumerable<UserDto> RelatedUsers { get; set; }
     }
 }

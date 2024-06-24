@@ -10,6 +10,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.IO;
+using System.Web;
 
 namespace FantasyForge_N01543896.Controllers {
     public class UserDataController : ApiController {
@@ -103,6 +105,9 @@ namespace FantasyForge_N01543896.Controllers {
             }
 
             db.Entry(user).State = EntityState.Modified;
+            // Picture update is handled by another method
+            db.Entry(user).Property(u => u.UserHasPic).IsModified = false;
+            db.Entry(user).Property(u => u.PicExtension).IsModified = false;
 
             try {
                 db.SaveChanges();
@@ -116,6 +121,91 @@ namespace FantasyForge_N01543896.Controllers {
                 }
             }
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        /// <summary>
+        /// Receives animal picture data, uploads it to the webserver and updates the animal's HasPic option
+        /// </summary>
+        /// <param name="id">the animal id</param>
+        /// <returns>status code 200 if successful.</returns>
+        /// <example>
+        /// curl -F animalpic=@file.jpg "https://localhost:xx/api/animaldata/uploadanimalpic/2"
+        /// POST: api/animalData/UpdateanimalPic/3
+        /// HEADER: enctype=multipart/form-data
+        /// FORM-DATA: image
+        /// </example>
+        /// https://stackoverflow.com/questions/28369529/how-to-set-up-a-web-api-controller-for-multipart-form-data
+
+        [HttpPost]
+        public IHttpActionResult UploadUserPic(int id)
+        {
+
+            bool haspic = false;
+            string picextension;
+            if (Request.Content.IsMimeMultipartContent())
+            {
+                Debug.WriteLine("Received multipart form data.");
+
+                int numfiles = HttpContext.Current.Request.Files.Count;
+                Debug.WriteLine("Files Received: " + numfiles);
+
+                //Check if a file is posted
+                if (numfiles == 1 && HttpContext.Current.Request.Files[0] != null)
+                {
+                    var userPic = HttpContext.Current.Request.Files[0];
+                    //Check if the file is empty
+                    if (userPic.ContentLength > 0)
+                    {
+                        //establish valid file types 
+                        var valtypes = new[] { "jpeg", "jpg", "png", "gif" };
+                        var extension = Path.GetExtension(userPic.FileName).Substring(1);
+                        //Check the extension of the file
+                        if (valtypes.Contains(extension))
+                        {
+                            try
+                            {
+                                //file name is the id of the image
+                                string fn = id + "." + extension;
+
+                                //get a direct file path to ~/Content/animals/{id}.{extension}
+                                string path = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/Images/Users/"), fn);
+
+                                //save the file
+                                userPic.SaveAs(path);
+
+                                //if these are all successful then we can set these fields
+                                haspic = true;
+                                picextension = extension;
+
+                                //Update the animal haspic and picextension fields in the database
+                                User SelectedUser = db.Users.Find(id);
+                                SelectedUser.UserHasPic = haspic;
+                                SelectedUser.PicExtension = extension;
+                                db.Entry(SelectedUser).State = EntityState.Modified;
+
+                                db.SaveChanges();
+
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine("User's Image was not saved successfully.");
+                                Debug.WriteLine("Exception:" + ex);
+                                return BadRequest();
+                            }
+                        }
+                    }
+
+                }
+
+                return Ok();
+            }
+            else
+            {
+                //not multipart form data
+                return BadRequest();
+
+            }
+
         }
 
         /// <summary>
@@ -138,6 +228,7 @@ namespace FantasyForge_N01543896.Controllers {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
+            user.JoinDate = DateTime.Now;
 
             db.Users.Add(user);
             db.SaveChanges();
@@ -170,6 +261,37 @@ namespace FantasyForge_N01543896.Controllers {
             db.SaveChanges();
 
             return Ok();
+        }
+
+        /// <summary>
+        /// Returns all users in the system associated with a particular media item.
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all users in the database related to a particular media item
+        /// </returns>
+        /// <param name="id">MediaItem Primary Key</param>
+        /// <example>
+        /// GET: api/UserData/ListUsersForMediaItem/1
+        /// </example>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<UserDto>))]
+        public IHttpActionResult ListUsersForMediaItem(int id)
+        {
+            var users = db.UserMediaItems
+                .Include(ui => ui.User)
+                .Where(ui => ui.MediaItemID == id)
+                .Select(ui => new UserDto
+                {
+                    UserID = ui.User.UserID,
+                    UserName = ui.User.UserName,
+                    Bio = ui.User.Bio,
+                    FavoriteGenre = ui.User.FavoriteGenre,
+                    JoinDate = ui.User.JoinDate,
+                    Location = ui.User.Location
+                }).ToList();
+
+            return Ok(users);
         }
 
         protected override void Dispose(bool disposing) {

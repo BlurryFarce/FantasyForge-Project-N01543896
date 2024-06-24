@@ -35,5 +35,6 @@ namespace FantasyForge_N01543896.Models
         {
             return new ApplicationDbContext();
         }
+
     }
 }

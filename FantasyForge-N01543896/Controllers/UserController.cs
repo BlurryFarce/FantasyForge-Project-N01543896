@@ -13,10 +13,11 @@ namespace FantasyForge_N01543896.Controllers {
     public class UserController : Controller {
         private static readonly HttpClient client;
         private JavaScriptSerializer jss = new JavaScriptSerializer();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         static UserController() {
             client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:44318/api/");
+            client.BaseAddress = new Uri("https://localhost:44387/api/");
         }
 
         // GET: User/List
@@ -29,10 +30,10 @@ namespace FantasyForge_N01543896.Controllers {
             HttpResponseMessage response = client.GetAsync(url).Result;
 
 
-            IEnumerable<UserDto> animals = response.Content.ReadAsAsync<IEnumerable<UserDto>>().Result;
+            IEnumerable<UserDto> users = response.Content.ReadAsAsync<IEnumerable<UserDto>>().Result;
 
 
-            return View(animals);
+            return View(users);
         }
 
         // GET: User/Details/5
@@ -55,12 +56,18 @@ namespace FantasyForge_N01543896.Controllers {
             ViewModel.SelectedUser = SelectedUser;
 
             //show associated personal list with this user
-            url = "usermediaitemdata/listusermediaitemforuser/" + id;
+            url = "usermediaitemdata/ListUserMediaItemsForUser/" + id;
             response = client.GetAsync(url).Result;
-            IEnumerable<UserMediaItem> UserPersonalList = response.Content.ReadAsAsync<IEnumerable<UserMediaItem>>().Result;
-
-            ViewModel.UserPersonalList = UserPersonalList;
-
+            Debug.WriteLine(response.StatusCode);
+            if (response.IsSuccessStatusCode)
+            {
+                IEnumerable<UserMediaItemDto> UserPersonalList = response.Content.ReadAsAsync<IEnumerable<UserMediaItemDto>>().Result;
+                ViewModel.UserPersonalList = UserPersonalList;
+            }
+            else
+            {
+                ViewModel.UserPersonalList = new List<UserMediaItemDto>();
+            }
 
             return View(ViewModel);
         }
@@ -73,14 +80,8 @@ namespace FantasyForge_N01543896.Controllers {
 
         // GET: User/New
         public ActionResult New() {
-            //information about all mediaitems in the system.
-            //GET api/mediaitem/listmediaitems
-
-            string url = "mediaitem/listmediaitem";
-            HttpResponseMessage response = client.GetAsync(url).Result;
-            IEnumerable<MediaItemDto> MediaItems = response.Content.ReadAsAsync<IEnumerable<MediaItemDto>>().Result;
-
-            return View(MediaItems);
+            
+            return View();
         }
 
         // POST: User/Create
@@ -89,7 +90,7 @@ namespace FantasyForge_N01543896.Controllers {
             Debug.WriteLine("the json payload is :");
             //objective: add a new user into our system using the API
             //curl -H "Content-Type:application/json" -d @user.json https://localhost:44318/api/Userdata/adduser
-            string url = "userdata/adduser";
+            string url = "userdata/adduser/";
 
 
             string jsonpayload = jss.Serialize(user);
@@ -111,36 +112,44 @@ namespace FantasyForge_N01543896.Controllers {
 
         // GET: User/Edit/5
         public ActionResult Edit(int id) {
-            UpdateUser ViewModel = new UpdateUser();
 
-            //the existing animal information
+            //the existing user information
             string url = "userdata/finduser/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             UserDto SelectedUser = response.Content.ReadAsAsync<UserDto>().Result;
-            ViewModel.SelectedUser = SelectedUser;
 
-            // all mediaitem to choose from when updating this user
-            //the existing animal information
-            url = "mediaitemdata/listmediaitems/";
-            response = client.GetAsync(url).Result;
-            IEnumerable<MediaItemDto> MediaItems = response.Content.ReadAsAsync<IEnumerable<MediaItemDto>>().Result;
-
-            ViewModel.MediaItems = MediaItems;
-
-            return View(ViewModel);
+            return View(SelectedUser);
         }
 
         // POST: User/Update/5
         [HttpPost]
-        public ActionResult Update(int id, User user) {
+        public ActionResult Update(int id, User user, HttpPostedFileBase UserPic) {
 
             string url = "userdata/updateuser/" + id;
             string jsonpayload = jss.Serialize(user);
+
             HttpContent content = new StringContent(jsonpayload);
             content.Headers.ContentType.MediaType = "application/json";
+
             HttpResponseMessage response = client.PostAsync(url, content).Result;
             Debug.WriteLine(content);
-            if (response.IsSuccessStatusCode) {
+
+            if(response.IsSuccessStatusCode && UserPic != null)
+            {
+                //Updating the User Profile picture as a separate request
+                Debug.WriteLine("Calling Update Image method.");
+                //Send over image data for player
+                url = "UserData/UploadUserPic/" + id;
+                Debug.WriteLine("Received Profile Picture "+UserPic.FileName);
+
+                MultipartFormDataContent requestcontent = new MultipartFormDataContent();
+                HttpContent imagecontent = new StreamContent(UserPic.InputStream);
+                requestcontent.Add(imagecontent, "UserPic", UserPic.FileName);
+                response = client.PostAsync(url, requestcontent).Result;
+
+                return RedirectToAction("List");
+            }
+            else if (response.IsSuccessStatusCode) {
                 return RedirectToAction("List");
             }
             else {
@@ -170,6 +179,6 @@ namespace FantasyForge_N01543896.Controllers {
             else {
                 return RedirectToAction("Error");
             }
-        }
+        }  
     }
 }

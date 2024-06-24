@@ -1,0 +1,87 @@
+﻿@model FantasyForge_N01543896.Models.ViewModels.DetailsMediaItem
+
+@{
+    ViewBag.Title = "Media Item Details";
+}
+
+<h2>Media Item Details</h2>
+
+<div>
+    <h4>Media Item</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Ttitle
+        </dt>
+        <dd>
+            @Model.SelectedMediaItem.Title
+        </dd>
+        <dt>
+            Type
+        </dt>
+        <dd>
+            @Model.SelectedMediaItem.Type
+        </dd>
+        <dt>
+            Description
+        </dt>
+        <dd>
+            @Model.SelectedMediaItem.Description
+        </dd>
+        <dt>
+            Genre
+        </dt>
+        <dd>
+            @Model.SelectedMediaItem.Genre
+        </dd>
+        <dt>
+            Release Date
+        </dt>
+        <dd>
+            @Model.SelectedMediaItem.ReleaseDate.ToShortDateString()
+        </dd>
+    </dl>
+</div>
+
+<h4>Users with this media Item on the list</h4>
+<table class="table">
+    <tr>
+        <th>
+            Username
+        </th>
+        <th>
+            FavoriteGenre
+        </th>
+        <th>
+            Location
+        </th>
+        <th>
+            JoinDate
+        </th>
+    </tr>
+
+    @foreach (var item in Model.RelatedUsers)
+    {
+        <tr>
+            <td>
+                @item.UserName
+            </td>
+            <td>
+                @item.FavoriteGenre
+            </td>
+            <td>
+                @item.Location
+            </td>
+            <td>
+                @item.JoinDate.ToShortDateString()
+            </td>
+        </tr>
+    }
+
+</table>
+
+<p>
+    <a href="/MediaItem/Edit/@Model.SelectedMediaItem.MediaItemID">Edit Media Item</a>
+    <a href="/MediaItem/DeleteConfirm/@Model.SelectedMediaItem.MediaItemID">Delete Media Item</a>
+    <a href="/MediaItem/List">Back to List</a>
+</p>

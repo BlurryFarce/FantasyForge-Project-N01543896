@@ -19,7 +19,11 @@ namespace FantasyForge_N01543896.Models {
 
         public string Location { get; set; }
 
-        public ICollection<UserMediaItem> UserMediaItems { get; set; }
+        //data needed for keeping track of user profile images uploaded
+        //images deposited into /Content/Images/Users/{id}.{extension}
+        public bool UserHasPic { get; set; }
+        public string PicExtension { get; set; }
+        public virtual ICollection<UserMediaItem> UserMediaItems { get; set; }
     }
 
     public class UserDto {
@@ -33,5 +37,10 @@ namespace FantasyForge_N01543896.Models {
         public DateTime JoinDate { get; set; }
 
         public string Location { get; set; }
+
+        //data needed for keeping track of user profile images uploaded
+        //images deposited into /Content/Images/Users/{id}.{extension}
+        public bool UserHasPic { get; set; }
+        public string PicExtension { get; set; }
     }
 }

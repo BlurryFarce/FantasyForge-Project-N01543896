@@ -14,7 +14,7 @@ namespace FantasyForge_N01543896.Models {
         public DateTime ReleaseDate { get; set; }
         public string Genre { get; set; }
 
-        public ICollection<UserMediaItem> UserMediaItems { get; set; }
+        public virtual ICollection<UserMediaItem> UserMediaItems { get; set; }
     }
 
     public class MediaItemDto {

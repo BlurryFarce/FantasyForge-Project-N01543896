@@ -1,0 +1,29 @@
+﻿@model FantasyForge_N01543896.Models.User
+
+@{
+    ViewBag.Title = "Create User";
+}
+
+<h2>Create User</h2>
+
+<form action="/User/Create" method="POST">
+    <div>
+        <label>Username:</label> <input type="text" name=UserName />
+    </div>
+    <div>
+        <label>Bio:</label> <textarea name="Bio" rows="5" cols="50"> </textarea>
+    </div>
+    <div>
+        <label>Favorite Genre:</label> <input type="text" name=FavoriteGenre />
+    </div>
+    <div>
+        <label>Location:</label> <input type="text" name="Location" />
+    </div>
+    <div>
+        <input type="submit" value="Add User" />
+    </div>
+</form>
+
+<div>
+    <a href="/User/List/">Back to List</a>
+</div>

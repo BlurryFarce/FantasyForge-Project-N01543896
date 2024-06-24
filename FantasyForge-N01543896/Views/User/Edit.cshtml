@@ -1,0 +1,45 @@
+﻿@model FantasyForge_N01543896.Models.UserDto
+
+@{
+    ViewBag.Title = "Edit User";
+}
+
+<h2>Update User</h2>
+
+<form action="/User/Update/@Model.UserID" method="POST" enctype = "multipart/form-data">
+    <div style="display:none;">
+        @* Pass through the User ID *@
+        <input type="text" name="UserID" value="@Model.UserID" />
+    </div>
+    <div>
+        <label>Username:</label>
+        <input type="text" name="UserName" value="@Model.UserName" />
+    </div>
+    <div>
+        <label>Bio:</label>
+        <textarea name="Bio" value="@Model.Bio" rows="4" cols="40"></textarea>
+    </div>
+    <div>
+        <label>Favourite Genre:</label>
+        <input type="text" name="FavoriteGenre" value="@Model.FavoriteGenre" />
+    </div>
+    <div>
+        <label>Location:</label>
+        <input type="text" name="Location" value="@Model.Location" />
+    </div>
+    <div style="display:none;">
+        @* Pass through the Join date *@
+        <input type="datetime" name="JoinDate" value="@Model.JoinDate" />
+    </div>
+    <div class="col-md-6 col-sm-12">
+        <label>Upload a Profile Picture</label>
+        <input type="file" name="UserPic" />
+    </div>
+    <div>
+        <input type="submit" value="Update User" />
+    </div>
+</form>
+
+<div>
+    <a href="/User/List">Back to list</a>
+</div>

@@ -1,0 +1,38 @@
+﻿@model FantasyForge_N01543896.Models.MediaItem
+
+@{
+    ViewBag.Title = "Create Media Item";
+}
+
+<h2>Create Media Item</h2>
+
+<form action="/MediaItem/Create" method="POST">
+    <div>
+        <label>Title:</label> <input type="text" name=Title />
+    </div>
+    <div>
+        <label>Description:</label> <textarea name="Description" rows="5" cols="50"> </textarea>
+    </div>
+    <div>
+        <fieldset>
+            <legend>Select Type</legend>
+            <input type="radio" name=Type value="Game" id="GameRadio" /> <label for="GameRadio">Game</label>
+            <input type="radio" name=Type value="Anime" id="AnimeRadio" /> <label for="AnimeRadio">Anime</label>
+        </fieldset>
+    </div>
+    
+    <div>
+        <label>Genre:</label> <input type="text" name="Genre" />
+    </div>
+    <div>
+        <label>ReleaseDate:</label> <input type="date" name="ReleaseDate" />
+    </div>
+    <div>
+        <input type="submit" value="Add Media Item" />
+
+    </div>
+</form>
+
+<div>
+    <a href="/MediaItem/List/">Back to List</a>
+</div>
